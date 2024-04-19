@@ -7,8 +7,9 @@ using var connection = factory.CreateConnection();
 using var channel = connection.CreateModel(); //Connecting to a service is slow. As time goes on, connection warms up and connections get faster. So to bypass this, RabbitMQ creates the connection and inside this connection, Channels are created. They work similar to Connection Pools of Databases and allow 
 
 //To send, we must declare a queue for us to send to; then we can publish a message to the queue:
+var queueName = "my-queue-name";
 
-channel.QueueDeclare(queue: "my-queue-name",
+channel.QueueDeclare(queue: queueName,
                     durable: true,
                     autoDelete: true,
                     exclusive: false,
@@ -23,7 +24,7 @@ while (true)
     var body = Encoding.UTF8.GetBytes(message);
 
     channel.BasicPublish(exchange: string.Empty,
-                         routingKey: "my-queue-name",
+                         routingKey: queueName,
                          basicProperties: null,
                          body: body);
     Console.WriteLine($" [X] Sent: {message} \n");
