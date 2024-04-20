@@ -1,10 +1,9 @@
-﻿using Consumer;
-using MongoDB.Bson.Serialization;
+﻿using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace Receive
+namespace Consumer.Repository
 {
-    public class MongoRepository
+    public class MongoRepository : IMongoRepository
     {
         private readonly string connectionString = "mongodb://localhost:27017";
         private readonly IMongoCollection<Payload> _pixCollection;

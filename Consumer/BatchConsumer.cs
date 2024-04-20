@@ -1,10 +1,18 @@
-﻿using MassTransit;
-using Receive;
+﻿using Consumer.Repository;
+using MassTransit;
+using System.Diagnostics;
 
 namespace Consumer
 {
     internal class BatchConsumer : IConsumer<Batch<Payload>>
     {
+        private readonly IMongoRepository _mongoRepository;
+
+        public BatchConsumer(IMongoRepository mongoRepository)
+        {
+            _mongoRepository = mongoRepository;
+        }
+
         public async Task Consume(ConsumeContext<Batch<Payload>> context)
         {
             var batch = context.Message;
@@ -13,9 +21,13 @@ namespace Consumer
 
             var msg = batch.Select(b => b.Message);
 
-            var repo = new MongoRepository(); //this is very bad practice, i`m creating a new repo every time the batch runs...
+            var stopwatch = Stopwatch.StartNew();
 
-            await repo.BatchInsertAsync(msg);
+            await _mongoRepository.BatchInsertAsync(msg);
+
+            stopwatch.Stop();
+
+            Console.WriteLine($"Inserção dos dados no banco de dados concluída em {stopwatch.ElapsedMilliseconds} milissegundos.");
         }
     }
 }

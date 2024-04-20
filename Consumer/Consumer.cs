@@ -1,4 +1,4 @@
-﻿using Consumer;
+﻿using Consumer.Extensions;
 using Microsoft.AspNetCore.Builder;
 
 
@@ -48,6 +48,7 @@ using Microsoft.AspNetCore.Builder;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMassTransitConfiguration();
+builder.Services.AddRepository();
 
 var app = builder.Build();
 

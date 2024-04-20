@@ -2,9 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Mime;
 
-namespace Consumer;
+namespace Consumer.Extensions;
 
-public static class ExtensionMethods
+public static class MassTransitExtension
 {
     public static IServiceCollection AddMassTransitConfiguration(this IServiceCollection services)
     {
@@ -13,10 +13,10 @@ public static class ExtensionMethods
             x.AddConsumer<BatchConsumer>(cfg =>
             {
                 cfg.Options<BatchOptions>(options => options
-                    .SetMessageLimit(200)
+                    .SetMessageLimit(500)
                     .SetTimeLimit(s: 1)
                     .SetTimeLimitStart(BatchTimeLimitStart.FromLast)
-                    .SetConcurrencyLimit(10));
+                    .SetConcurrencyLimit(15));
             });
 
             x.UsingRabbitMq((context, cfg) =>
