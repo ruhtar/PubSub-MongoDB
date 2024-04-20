@@ -15,13 +15,12 @@ namespace Consumer
 
         public async Task Consume(ConsumeContext<Batch<Payload>> context)
         {
+            var stopwatch = Stopwatch.StartNew();
             var batch = context.Message;
 
             var count = batch.Length; //Message Limit
 
             var msg = batch.Select(b => b.Message);
-
-            var stopwatch = Stopwatch.StartNew();
 
             await _mongoRepository.BatchInsertAsync(msg);
 

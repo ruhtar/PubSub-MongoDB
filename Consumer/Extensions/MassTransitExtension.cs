@@ -35,7 +35,7 @@ public static class MassTransitExtension
                     e.DefaultContentType = new ContentType("application/json");
                     e.UseRawJsonDeserializer();
 
-                    e.UseMessageRetry(r => r.Interval(5, 1000));
+                    e.UseMessageRetry(r => r.Interval(5, 1000)); // this can be set to exponential
 
                     e.ConfigureConsumer<BatchConsumer>(context);
                 });
