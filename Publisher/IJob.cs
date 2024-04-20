@@ -1,7 +1,6 @@
-﻿namespace Publisher
+﻿namespace Publisher;
+
+public interface IJob
 {
-    public interface IJob
-    {
-        void Run();
-    }
+    void Start();
 }
