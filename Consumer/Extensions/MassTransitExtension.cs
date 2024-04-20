@@ -13,7 +13,7 @@ public static class MassTransitExtension
             x.AddConsumer<BatchConsumer>(cfg =>
             {
                 cfg.Options<BatchOptions>(options => options
-                    .SetMessageLimit(500)
+                    .SetMessageLimit(1000)
                     .SetTimeLimit(s: 1)
                     .SetTimeLimitStart(BatchTimeLimitStart.FromLast)
                     .SetConcurrencyLimit(15));
