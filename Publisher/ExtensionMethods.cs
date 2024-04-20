@@ -1,13 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MassTransit;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Publisher
+namespace Publisher;
+
+public static class ExtensionMethods
 {
-    internal class ExtensionMethods
+    public static IServiceCollection AddMassTransitConfiguration(this IServiceCollection services)
     {
-        public IServiceCollection AddMassTransit(IServiceCollection services)
+        services.AddMassTransit(x =>
         {
+            x.UsingRabbitMq((context, cfg) =>
+            {
 
-            return services;
-        }
+            });
+        });
+        return services;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Publisher;
 using RabbitMQ.Client;
 using System.Text;
 
@@ -10,9 +11,9 @@ using var connection = factory.CreateConnection();
 using var channel = connection.CreateModel(); //Connecting to a service is slow. As time goes on, connection warms up and connections get faster. So to bypass this, RabbitMQ creates the connection and inside this connection, Channels are created. They work similar to Connection Pools of Databases and allow 
 
 //To send, we must declare a queue for us to send to; then we can publish a message to the queue:
-const string queueName = "rabbitMq-queue";
+const string vanillaQueueName = "queue-mass-transit";
 
-channel.QueueDeclare(queue: queueName,
+channel.QueueDeclare(queue: vanillaQueueName,
                     durable: true,
                     autoDelete: false,
                     exclusive: false,
@@ -31,10 +32,10 @@ while (true)
 
     var body = Encoding.UTF8.GetBytes(message);
 
-    for (int i = 0; i < times; i++)
+    for (int i = 0; i < times * 2000; i++)
     {
         channel.BasicPublish(exchange: string.Empty,
-                     routingKey: queueName,
+                     routingKey: vanillaQueueName,
                      basicProperties: null,
                      body: body);
     }
@@ -51,6 +52,8 @@ while (true)
 #region Mass transit
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMassTransitConfiguration();
 
 var app = builder.Build();
 
