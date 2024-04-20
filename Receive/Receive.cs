@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Receive;
 using System.Text;
 
 
@@ -22,16 +23,20 @@ Console.WriteLine(" [*] Waiting for messages.");
 
 var consumer = new EventingBasicConsumer(channel);
 
-//This is a delegate
-consumer.Received += (model, ea) =>
-{
-    var body = ea.Body.ToArray();
-    var message = Encoding.UTF8.GetString(body);
-    Console.WriteLine($" [x] Received: {message}");
-};
 channel.BasicConsume(queue: queueName,
                      autoAck: true,
                      consumer: consumer);
+
+//This is a delegate
+consumer.Received += async (model, ea) =>
+{
+    var body = ea.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+    var repo = new MongoRepository();
+    await repo.InsertJsonAsync(message);
+    Console.WriteLine($" [x] Received: {message}");
+};
+
 
 Console.WriteLine(" Press [enter] to exit.");
 Console.ReadLine();

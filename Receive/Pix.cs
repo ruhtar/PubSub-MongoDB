@@ -30,5 +30,5 @@ public class Pix
 
 public class PixCollection
 {
-    public List<Pix> Pix { get; set; }
+    public IEnumerable<Pix> Pix { get; set; }
 }
