@@ -1,19 +1,14 @@
-﻿using MassTransit;
+﻿using Hangfire;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Publisher;
 
 public static class ExtensionMethods
 {
-    public static IServiceCollection AddMassTransitConfiguration(this IServiceCollection services)
+    public static IServiceCollection AddHangfire(this IServiceCollection services)
     {
-        services.AddMassTransit(x =>
-        {
-            x.UsingRabbitMq((context, cfg) =>
-            {
-
-            });
-        });
+        services.AddHangfire();
+        GlobalConfiguration.Configuration.UseInMemoryStorage();
         return services;
     }
 }

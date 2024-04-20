@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Hangfire;
+using Microsoft.AspNetCore.Builder;
 using Publisher;
 using RabbitMQ.Client;
 using System.Text;
@@ -79,9 +80,13 @@ while (true)
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMassTransitConfiguration();
+builder.Services.AddHangfireServer();
+
+builder.Services.AddHangfire();
 
 var app = builder.Build();
+
+app.UseHangfireDashboard();
 
 app.Run();
 
