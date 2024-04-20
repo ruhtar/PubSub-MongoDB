@@ -26,7 +26,7 @@ namespace Consumer
 
             stopwatch.Stop();
 
-            Console.WriteLine($"Data insertion into the database completed in {stopwatch.ElapsedMilliseconds} milliseconds.")
+            Console.WriteLine($"Data insertion into the database completed in {stopwatch.ElapsedMilliseconds} milliseconds.");
         }
     }
 }

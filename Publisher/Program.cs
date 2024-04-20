@@ -25,26 +25,27 @@ var message = @"{
         {
             ""txId"": ""08f714646220ea4d52ba7d3c5d05361c3a"",
             ""chave"": ""b2wa110c-eb6e-41b8-8c4d-ac4f354b03ea"",
-            ""valor"": ""19.37"",
-            ""horario"": ""2024-01-26T19:13:13.157Z"",
+            ""valor"": ""42.00"",
+            ""horario"": ""2024-04-20T12:34:56.789Z"",
             ""pagador"": {
-                ""nome"": ""xxxxx"",
-                ""banco"": ""xxxxx"",
-                ""conta"": ""xxxx"",
-                ""agencia"": ""1"",
-                ""cpfCnpj"": ""xxxxx"",
-                ""tipoConta"": ""xxxx"",
-                ""tipoPessoa"": ""xxxxxx""
+                ""nome"": ""Zaphod Beeblebrox"",
+                ""banco"": ""Galactic Bank of Betelgeuse"",
+                ""conta"": ""1234567890"",
+                ""agencia"": ""42"",
+                ""cpfCnpj"": ""01234567890"",
+                ""tipoConta"": ""Extraterrestrial Checking"",
+                ""tipoPessoa"": ""Intergalactic Being""
             },
             ""devolucoes"": [],
             ""endToEndId"": ""E306355055520240126191300352240410"",
-            ""infoPagador"": ""Serviço realizado."",
+            ""infoPagador"": ""Don't Panic!"",
             ""componentesValor"": {
-                ""original"": ""19.37""
+                ""original"": ""42.00""
             }
         }
     ]
 }";
+
 
 //todo: adicionar publisher de 1 em 1 no loop pelo mass transit
 while (true)
