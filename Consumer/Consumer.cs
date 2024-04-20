@@ -1,15 +1,17 @@
-﻿using RabbitMQ.Client;
+﻿using Microsoft.AspNetCore.Builder;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Receive;
 using System.Text;
 
 
+#region Vanilla RabbitMq
 var factory = new ConnectionFactory { HostName = "localhost" };
 using var connection = factory.CreateConnection();
 using var channel = connection.CreateModel(); //Connecting to a service is slow. As time goes on, connection warms up and connections get faster. So to bypass this, RabbitMQ creates the connection and inside this connection, Channels are created. They work similar to Connection Pools of Databases and allow 
 
 //Here in the Receive program, we are re-declaring the queue. This is no problem because RabbitMq will try to declare this queue again. If it already exists, it does nothing. Otherwise, the queue is created.
-const string queueName = "my-queue-name";
+const string queueName = "rabbitMq-queue";
 
 channel.QueueDeclare(queue: queueName,
                     durable: true,
@@ -28,6 +30,7 @@ channel.BasicConsume(queue: queueName,
                      consumer: consumer);
 
 //This is a delegate
+//todo: adicionar consumer em batch e implementar metodo de insert em massa no mongo
 consumer.Received += async (model, ea) =>
 {
     var body = ea.Body.ToArray();
@@ -41,3 +44,14 @@ consumer.Received += async (model, ea) =>
 Console.WriteLine(" Press [enter] to exit.");
 Console.ReadLine();
 
+#endregion
+
+#region Mass transit
+
+var builder = WebApplication.CreateBuilder(args);
+
+var app = builder.Build();
+
+app.Run();
+
+#endregion
