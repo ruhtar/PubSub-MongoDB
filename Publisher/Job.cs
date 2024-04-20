@@ -50,7 +50,6 @@ public static class Job
         using var connection = factory.CreateConnection();
 
         using var channel = connection.CreateModel(); //Connecting to a service is slow. As time goes on, connection warms up and connections get faster. So to bypass this, RabbitMQ creates the connection and inside this connection, Channels are created. They work similar to Connection Pools of Databases and allow 
-
         channel.QueueDeclare(queue: queueName,
                             durable: true,
                             autoDelete: false,
@@ -61,10 +60,10 @@ public static class Job
         var body = Encoding.UTF8.GetBytes(message);
         for (int i = 0; i < 2000; i++)
         {
-            //channel.BasicPublish(exchange: string.Empty,
-            //             routingKey: queueName,
-            //             basicProperties: null,
-            //             body: body);
+            channel.BasicPublish(exchange: string.Empty,
+                         routingKey: queueName,
+                         basicProperties: null,
+                         body: body);
         }
     }
 }
