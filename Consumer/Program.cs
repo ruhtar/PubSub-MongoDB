@@ -49,6 +49,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMassTransitConfiguration();
 builder.Services.AddRepository();
+builder.Services.AddIOptionsImplementation(builder.Configuration);
 
 var app = builder.Build();
 
