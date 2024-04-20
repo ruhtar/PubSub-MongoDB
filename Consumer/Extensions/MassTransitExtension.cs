@@ -27,7 +27,7 @@ public static class MassTransitExtension
                     h.Password("guest");
                 });
 
-                cfg.ReceiveEndpoint("queue-mass-transit", e =>
+                cfg.ReceiveEndpoint("async-pubSub", e =>
                 {
                     e.AutoDelete = false;
                     e.Durable = true;
