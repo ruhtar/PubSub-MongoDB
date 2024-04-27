@@ -3,7 +3,7 @@ using RabbitMQ.Client;
 using System.Text;
 
 namespace Publisher;
-public class Job : IJob
+public class Job
 {
     private const string message = @"{
     ""pix"": [
@@ -34,13 +34,10 @@ public class Job : IJob
     private readonly ConnectionFactory _factory;
     private IConnection _connection;
 
-    public Job()
+    public Job() => _factory = new ConnectionFactory
     {
-        _factory = new ConnectionFactory
-        {
-            HostName = "localhost"
-        };
-    }
+        HostName = "localhost"
+    };
 
     public void Start()
     {
